@@ -42,6 +42,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 err1.setVisibility(View.INVISIBLE);
                 err2.setVisibility(View.INVISIBLE);
+                if(pwd.getText().toString().length() == 6 && email.getText().toString().length() != 0){
+                    loginButton.setEnabled(true);
+                } else {
+                    loginButton.setEnabled(false);
+                }
             }
 
             @Override
@@ -56,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(pwd.getText().toString().length() == 6){
+                if(pwd.getText().toString().length() == 6 && email.getText().toString().length() != 0){
                     loginButton.setEnabled(true);
                 } else {
                     loginButton.setEnabled(false);
