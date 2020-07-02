@@ -13,47 +13,47 @@ import java.util.List;
 
 public class MainActivity  extends AppCompatActivity {
 
-    private FloatingActionButton buttonAddTask;
+    private FloatingActionButton buttonAddTodo;
     private RecyclerView recyclerView;
 
     protected void onCreate(Bundle saveInstaceState){
         super.onCreate(saveInstaceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerview_tasks);
+        recyclerView = findViewById(R.id.recyclerview_todos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        buttonAddTask = findViewById(R.id.floating_button_add);
-        buttonAddTask.setOnClickListener(new View.OnClickListener() {
+        buttonAddTodo = findViewById(R.id.floating_button_add);
+        buttonAddTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddTodoActivity.class);
                 startActivity(intent);
             }
         });
-        getTasks();
+        getTodo();
     }
 
-    private void getTasks(){
-        class GetTasks extends AsyncTask<Void, Void, List<Task>>{
+    private void getTodo(){
+        class GetTodo extends AsyncTask<Void, Void, List<Todo>>{
             @Override
-            protected List<Task> doInBackground(Void... voids) {
-                List<Task> taskList = DatabaseClient
+            protected List<Todo> doInBackground(Void... voids) {
+                List<Todo> todoList = DatabaseClient
                         .getInstance(getApplicationContext())
                         .getAppDatabase()
-                        .taskDao()
+                        .todoDao()
                         .getAll();
-                return taskList;
+                return todoList;
             }
 
             @Override
-            protected void onPostExecute(List<Task> taskList) {
+            protected void onPostExecute(List<Todo> taskList) {
                 super.onPostExecute(taskList);
-                TaskAdapter adapter = new TaskAdapter(MainActivity.this, taskList);
+                TodoAdapter adapter = new TodoAdapter(MainActivity.this, taskList);
                 recyclerView.setAdapter(adapter);
             }
         }
-        GetTasks gt = new GetTasks();
+        GetTodo gt = new GetTodo();
         gt.execute();
     }
 

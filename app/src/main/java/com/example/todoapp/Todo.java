@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class Task implements Serializable{
+public class Todo implements Serializable{
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "task")
-    private String task;
+    @ColumnInfo(name = "name")
+    private String name;
 
     @ColumnInfo(name = "desc")
     private String desc;
@@ -32,12 +32,12 @@ public class Task implements Serializable{
         this.id = id;
     }
 
-    public String getTask() {
-        return task;
+    public String getName() {
+        return name;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDesc() {

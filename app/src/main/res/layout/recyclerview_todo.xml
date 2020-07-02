@@ -28,7 +28,7 @@
                             android:textColor="@color/colorLight"
                             android:textStyle="bold" />
                     <TextView
-                            android:id="@+id/textViewTask"
+                            android:id="@+id/textViewTodo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Go Bring Eggs"

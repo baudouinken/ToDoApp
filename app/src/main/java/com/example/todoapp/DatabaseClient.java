@@ -8,13 +8,11 @@ public class DatabaseClient {
     private Context mCtx;
     private static DatabaseClient mInstance;
 
-    //our app DB object
     private AppDatabase appDatabase;
 
     private DatabaseClient(Context mCtx){
         this.mCtx = mCtx;
 
-        //We Create the appdatabe with Room databse builder
         // Database Name : Todos
         appDatabase = Room.databaseBuilder(mCtx,AppDatabase.class, "Todos").build();
     }

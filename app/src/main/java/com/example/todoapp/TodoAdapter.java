@@ -11,26 +11,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TasksViewHolder> {
+public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder> {
 
     private Context mCtx;
-    private List<Task> taskList;
+    private List<Todo> todoList;
 
-    public TaskAdapter(Context mCtx, List<Task> taskList) {
+    public TodoAdapter(Context mCtx, List<Todo> todoList) {
         this.mCtx = mCtx;
-        this.taskList = taskList;
+        this.todoList = todoList;
     }
 
     @Override
-    public TaskAdapter.TasksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mCtx).inflate(R.layout.recyclerview_task, parent, false);
-        return new TasksViewHolder(view);
+    public TodoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mCtx).inflate(R.layout.recyclerview_todo, parent, false);
+        return new TodoViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskAdapter.TasksViewHolder holder, int position) {
-        Task t = taskList.get(position);
-        holder.textViewTask.setText(t.getTask());
+    public void onBindViewHolder(@NonNull TodoViewHolder holder, int position) {
+        Todo t = todoList.get(position);
+        holder.textViewTodo.setText(t.getName());
         holder.textViewDesc.setText(t.getDesc());
         holder.textViewFinishBy.setText(t.getFinishBy());
 
@@ -42,18 +42,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TasksViewHolde
 
     @Override
     public int getItemCount() {
-        return taskList.size();
+        return todoList.size();
     }
 
-    class TasksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TodoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textViewStatus, textViewTask, textViewDesc, textViewFinishBy;
+        TextView textViewStatus, textViewTodo, textViewDesc, textViewFinishBy;
 
-        public TasksViewHolder(View itemView) {
+        public TodoViewHolder(View itemView) {
             super(itemView);
 
             textViewStatus = itemView.findViewById(R.id.textViewStatus);
-            textViewTask = itemView.findViewById(R.id.textViewTask);
+            textViewTodo = itemView.findViewById(R.id.textViewTodo);
             textViewDesc = itemView.findViewById(R.id.textViewDesc);
             textViewFinishBy = itemView.findViewById(R.id.textViewFinishBy);
 
@@ -63,10 +63,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TasksViewHolde
 
         @Override
         public void onClick(View view) {
-            Task task = taskList.get(getAdapterPosition());
+            Todo todo = todoList.get(getAdapterPosition());
 
-            Intent intent = new Intent(mCtx, UpdateTaskActivity.class);
-            intent.putExtra("Task", task);
+            Intent intent = new Intent(mCtx, UpdateTodoActivity.class);
+            intent.putExtra("Todo", todo);
 
             mCtx.startActivity(intent);
         }

@@ -8,35 +8,35 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddTaskActivity extends AppCompatActivity {
+public class AddTodoActivity extends AppCompatActivity {
 
-    private EditText editTextTask, editTextDesc, editTextFinishBy;
+    private EditText editTextTodo, editTextDesc, editTextFinishBy;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task);
+        setContentView(R.layout.activity_add_todo);
 
-        editTextTask = findViewById(R.id.editTextTask);
+        editTextTodo = findViewById(R.id.editTextTodo);
         editTextDesc = findViewById(R.id.editTextDesc);
         editTextFinishBy = findViewById(R.id.editTextFinishBy);
 
         findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveTask();
+                saveTodo();
             }
         });
 
     }
 
-    public void saveTask(){
-        final String sTask = editTextTask.getText().toString().trim();
+    public void saveTodo(){
+        final String sTask = editTextTodo.getText().toString().trim();
         final String sDesc = editTextDesc.getText().toString().trim();
         final String sFinishBy = editTextFinishBy.getText().toString().trim();
 
         if (sTask.isEmpty()){
-            editTextTask.setError("Task Required");
-            editTextTask.requestFocus();
+            editTextTodo.setError("Todo Required");
+            editTextTodo.requestFocus();
             return;
         }
 
@@ -52,18 +52,18 @@ public class AddTaskActivity extends AppCompatActivity {
             return;
         }
 
-        class SaveTask extends AsyncTask<Void, Void, Void> {
+        class SaveTodo extends AsyncTask<Void, Void, Void> {
 
             protected Void doInBackground(Void... voids){
-                //Create a new Task
-                Task task = new Task();
-                task.setTask(sTask);
-                task.setDesc(sDesc);
-                task.setFinishBy(sFinishBy);
-                task.setFinished(false);
+                //Create a new Todo
+                Todo todo = new Todo();
+                todo.setName(sTask);
+                todo.setDesc(sDesc);
+                todo.setFinishBy(sFinishBy);
+                todo.setFinished(false);
 
                 //Adding to db
-                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().taskDao().insert(task);
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().insert(todo);
                 return null;
             }
 
@@ -75,7 +75,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         }
 
-        SaveTask st = new SaveTask();
+        SaveTodo st = new SaveTodo();
         st.execute();
 
     }

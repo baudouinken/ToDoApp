@@ -1,0 +1,10 @@
+com/example/todoapp/model/DataItemCRUDAccessor.java
+ com.example.todoapp.model.DataItemCRUDAccessor
+com/example/todoapp/remote/RemoteDataAccessRESTService.java
+ com.example.todoapp.remote.RemoteDataAccessRESTService
+com/example/todoapp/remote/RemoteDataItemAccessor.java
+ com.example.todoapp.remote.RemoteDataItemAccessor
+ com.example.todoapp.remote.RemoteDataItemAccessor$1
+com/example/todoapp/model/DataItem.java
+ com.example.todoapp.model.DataItem
+ com.example.todoapp.model.DataItem$ItemTypes
