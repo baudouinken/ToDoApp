@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="match_parent"
+                                               android:orientation="vertical">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/errormessage1"
+            android:paddingTop="20dp"
+            android:visibility="invisible"
+            android:text="Please use a valid E-Mail Adress" android:textColor="#D50000" android:paddingLeft="10px"/>
+    <EditText android:id="@+id/email"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="Email"
+              android:imeOptions="actionNext"
+              android:maxLines="1"
+              android:inputType="textEmailAddress"/>
+    <EditText android:id="@+id/password"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="Password"
+              android:imeOptions="actionDone"
+              android:maxLines="1"
+              android:inputType="numberPassword"/>
+    <TextView
+            android:text="numeric, 6 digits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/textView"
+            android:paddingLeft="3dp"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/errormessage2"
+            android:paddingTop="30dp"
+            android:visibility="invisible"
+            android:text="Login incorrect" android:textColor="#D50000"
+            android:paddingStart="8dp"/>
+    <Button
+            android:id="@+id/login"
+            android:text="Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:clickable="true"/>
+    <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar" android:paddingTop="20dp" android:visibility="invisible"
+            android:progressTint="#2962FF"/>
+
+</LinearLayout>
