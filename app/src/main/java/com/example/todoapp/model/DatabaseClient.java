@@ -1,9 +1,7 @@
-package com.example.todoapp;
+package com.example.todoapp.model;
 
 import androidx.room.Room;
 import android.content.Context;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 public class DatabaseClient {
 

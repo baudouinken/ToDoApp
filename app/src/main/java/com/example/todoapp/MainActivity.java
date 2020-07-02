@@ -7,6 +7,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.todoapp.model.DatabaseClient;
+import com.example.todoapp.model.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

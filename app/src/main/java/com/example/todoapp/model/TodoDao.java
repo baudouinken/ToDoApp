@@ -1,6 +1,7 @@
-package com.example.todoapp;
+package com.example.todoapp.model;
 
 import androidx.room.*;
+import com.example.todoapp.model.Todo;
 
 import java.util.List;
 

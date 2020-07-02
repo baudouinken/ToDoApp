@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.todoapp.model.DatabaseClient;
+import com.example.todoapp.model.Todo;
 
 public class UpdateTodoActivity extends AppCompatActivity {
 
