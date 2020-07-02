@@ -36,7 +36,11 @@ public class RemoteDataItemAccessor implements TodoCRUDAccessor {
 
 	@Override
 	public boolean createTodoList(List<Todo> todoList) {
-		return false;
+		this.todoList.removeAll(this.todoList);
+		this.todoList.addAll(todoList);
+		idCount = todoList.size();
+		logger.info("createTodoList(): " + todoList);
+		return true;
 	}
 
 	@Override
@@ -56,6 +60,7 @@ public class RemoteDataItemAccessor implements TodoCRUDAccessor {
 	@Override
 	public Todo updateTodo(Todo todo) {
 			logger.info("updateTodo(): " + todo);
-			return todoList.get(todoList.indexOf(todo)).updateFrom(todo);
+			//return todoList.get(todoList.indexOf(todo)).updateFrom(todo);
+			return todo;
 	}
 }

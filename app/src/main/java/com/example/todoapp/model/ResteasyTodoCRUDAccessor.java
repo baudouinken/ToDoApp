@@ -1,8 +1,6 @@
 package com.example.todoapp.model;
 
 import android.util.Log;
-import de.thb.fbi.msr.maus.einkaufsliste.model.DataItem;
-import de.thb.fbi.msr.maus.einkaufsliste.model.DataItemCRUDAccessor;
 import org.jboss.resteasy.client.ProxyFactory;
 import org.jboss.resteasy.client.core.executors.ApacheHttpClient4Executor;
 
@@ -22,79 +20,51 @@ public class ResteasyTodoCRUDAccessor implements TodoCRUDAccessor {
 		Log.i(logger,"initialising restClient for baseUrl: " + baseUrl);
 		
 		// create a client for the server-side implementation of the interface
-		this.restClient = ProxyFactory.create(DataItemCRUDAccessor.class,
+		this.restClient = ProxyFactory.create(TodoCRUDAccessor.class,
 				baseUrl,
 				new ApacheHttpClient4Executor());
 		
 		Log.i(logger,"initialised restClient: " + restClient + " of class " + restClient.getClass());
 	}
 
-	@Override
-	public List<DataItem> readAllItems() {
-		Log.i(logger, "readAllItems()");
-
-		List<DataItem> itemlist = restClient.readAllItems();
-		
-		Log.i(logger, "readAllItems(): got: " + itemlist);
-	
-		return itemlist;
-	}
-
-	@Override
-	public DataItem createItem(DataItem item) {
-		Log.i(logger, "createItem(): send: " + item);
-
-		item = restClient.createItem(item);
-		
-		Log.i(logger, "createItem(): got: " + item);
-	
-		return item;
-	}
-
-	@Override
-	public boolean deleteItem(long itemId) {
-		Log.i(logger, "deleteItem(): send: " + itemId);
-
-		boolean deleted = restClient.deleteItem(itemId);
-		
-		Log.i(logger, "deleteItem(): got: " + deleted);
-	
-		return deleted;
-	}
-
-	@Override
-	public DataItem updateItem(DataItem item) {
-		Log.i(logger, "updateItem(): send: " + item);
-
-		item = restClient.updateItem(item);
-		
-		Log.i(logger, "updateItem(): got: " + item);
-	
-		return item;
-	}
 
 	@Override
 	public List<Todo> getTodoList() {
-		return null;
+		Log.i(logger, "getTodoList()");
+		List<Todo> todoList = restClient.getTodoList();
+		Log.i(logger, "readAllItems(): got: " + todoList);
+		return todoList;
 	}
 
 	@Override
 	public Todo createTodo(Todo todo) {
-		return null;
+		Log.i(logger, "createTodo(): send: " + todo);
+		todo = restClient.createTodo(todo);
+		Log.i(logger, "createTodo(): got: " + todo);
+		return todo;
 	}
 
 	@Override
 	public boolean createTodoList(List<Todo> todoList) {
-		return false;
+		Log.i(logger, "createTodoList(): send: " + todoList);
+		boolean list = restClient.createTodoList(todoList);
+		Log.i(logger, "createTodoList(): got: " + list);
+		return list;
 	}
 
 	@Override
-	public boolean deleteTodo(long todoId) {
-		return false;
+	public boolean deleteTodo(int todoId) {
+		Log.i(logger, "deleteTodo(): send: " + todoId);
+		boolean deleted = restClient.deleteTodo(todoId);
+		Log.i(logger, "deleteTodo(): got: " + deleted);
+		return deleted;
 	}
 
 	@Override
 	public Todo updateTodo(Todo todo) {
-		return null;
+		Log.i(logger, "updateTodo(): send: " + todo);
+		todo = restClient.updateTodo(todo);
+		Log.i(logger, "updateTodo(): got: " + todo);
+		return todo;
 	}
 }
