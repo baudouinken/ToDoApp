@@ -8,3 +8,7 @@ com/example/todoapp/remote/RemoteDataItemAccessor.java
 com/example/todoapp/model/DataItem.java
  com.example.todoapp.model.DataItem
  com.example.todoapp.model.DataItem$ItemTypes
+com/example/todoapp/model/Todo.java
+ com.example.todoapp.model.Todo
+com/example/todoapp/model/TodoCRUDAccessor.java
+ com.example.todoapp.model.TodoCRUDAccessor
