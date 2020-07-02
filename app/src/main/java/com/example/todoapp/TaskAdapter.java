@@ -66,7 +66,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TasksViewHolde
             Task task = taskList.get(getAdapterPosition());
 
             Intent intent = new Intent(mCtx, UpdateTaskActivity.class);
-            intent.putExtra("task", task);
+            intent.putExtra("Task", task);
 
             mCtx.startActivity(intent);
         }

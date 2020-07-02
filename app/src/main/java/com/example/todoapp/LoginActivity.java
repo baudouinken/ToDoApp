@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         if(counter == 100){
                             t.purge();
-                            //startActivity(new Intent(LoginActivity.this, ToDoListActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }
                     }
                 };
