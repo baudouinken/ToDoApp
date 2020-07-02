@@ -3,65 +3,59 @@ package com.example.todoapp.remote;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.todoapp.model.Todo;
+import com.example.todoapp.model.TodoCRUDAccessor;
 import org.apache.log4j.Logger;
-import com.example.todoapp.model.DataItem;
-import com.example.todoapp.model.DataItemCRUDAccessor;
 
-public class RemoteDataItemAccessor implements DataItemCRUDAccessor {
+public class RemoteDataItemAccessor implements TodoCRUDAccessor {
 
 	protected static Logger logger = Logger
 			.getLogger(RemoteDataItemAccessor.class);
 
-	/**
-	 * the list of data items, note that the list is *static* as for each client
-	 * request a new instance of this class will be created!
-	 */
-	private static List<DataItem> itemlist = new ArrayList<DataItem>();
+	private static List<Todo> todoList = new ArrayList<Todo>();
 
 	/**
 	 * we assign the ids here
 	 */
-	private static long idCount = 0;
+	private static int idCount = 0;
 	
-	@Override
-	public List<DataItem> readAllItems() {
-		logger.info("readAllItems(): " + itemlist);
 
-		return itemlist;
+	@Override
+	public List<Todo> getTodoList() {
+		logger.info("geTodoList(): " + todoList);
+		return todoList;
 	}
 
 	@Override
-	public DataItem createItem(DataItem item) {
-		logger.info("createItem(): " + item);
-		item.setId(idCount++);
-
-		itemlist.add(item);
-		return item;
+	public Todo createTodo(Todo todo) {
+		logger.info("createTodo(): " + todo);
+		todo.setId(idCount++);
+		todoList.add(todo);
+		return todo;
 	}
 
 	@Override
-	public boolean deleteItem(final long itemId) {
-		logger.info("deleteItem(): " + itemId);
+	public boolean createTodoList(List<Todo> todoList) {
+		return false;
+	}
 
-		boolean removed = itemlist.remove(new DataItem() {
-			/**
-			 * 
-			 */
+	@Override
+	public boolean deleteTodo(int todoId) {
+		logger.info("deleteTodo(): " + todoId);
+		boolean removed = todoList.remove(new Todo() {
 			private static final long serialVersionUID = 71193783355593985L;
 
 			@Override
-			public long getId() {
-				return itemId;
+			public int getId() {
+				return todoId;
 			}
 		});
-
 		return removed;
 	}
 
 	@Override
-	public DataItem updateItem(DataItem item) {
-		logger.info("updateItem(): " + item);
-
-		return itemlist.get(itemlist.indexOf(item)).updateFrom(item);
+	public Todo updateTodo(Todo todo) {
+			logger.info("updateTodo(): " + todo);
+			return todoList.get(todoList.indexOf(todo)).updateFrom(todo);
 	}
 }
