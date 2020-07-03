@@ -14,21 +14,24 @@
             android:networkSecurityConfig="@xml/network_security_config">
 
         <activity android:name=".InitActivity">
+
+        </activity>
+        <activity android:name=".LoginActivity">
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-                  android:label="Hermione">
-        </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
         <activity android:name=".AddTodoActivity">
         </activity>
         <activity android:name=".UpdateTodoActivity">
         </activity>
+
+        <uses-library
+                android:name="org.apache.http.legacy"
+                android:required="false"/>
     </application>
 
 </manifest>
