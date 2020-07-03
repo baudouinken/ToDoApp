@@ -1,6 +1,9 @@
 package com.example.todoapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -8,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -15,6 +19,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.io.DataOutputStream;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,8 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         email.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -50,14 +58,12 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
         pwd.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -70,8 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
 
@@ -84,43 +89,63 @@ public class LoginActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(email.getText()) && !Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()){
                     err1.setVisibility(View.VISIBLE);
                 }
+                else {
+                    new AsyncTask<Void, Void, Object>() {
 
-                final boolean[] valid = {false};
-                final ProgressBar pb = findViewById(R.id.progressBar);
-                final Timer t = new Timer();
-                final TimerTask tt = new TimerTask() {
-                    int counter = 0;
-                    @Override
-                    public void run() {
-                        counter++;
-                        pb.setProgress(counter);
-                        if(counter == 50 && !valid[0]) {
-                            pb.setVisibility(View.INVISIBLE);
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    err2.setVisibility(View.VISIBLE);
+                        private ProgressDialog dialog = null;
+
+                        @Override
+                        protected void onPreExecute() {
+
+                            dialog = ProgressDialog.show(LoginActivity.this,
+                                    "Login...", "Please wait...");
+                        }
+
+                        @Override
+                        protected Object doInBackground(Void... arg) {
+                            try {
+                                String urlParameters = "email="+email.getText().toString()+"&pwd="+pwd.getText().toString();
+                                byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+                                int postDataLength = postData.length;
+                                String request = "http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/login";
+                                URL url = new URL(request);
+                                HttpURLConnection conn= (HttpURLConnection) url.openConnection();
+                                conn.setDoOutput(true);
+                                conn.setRequestMethod("POST");
+                                conn.setRequestProperty("Content-Type", "application/json");
+                                conn.setRequestProperty("charset", "utf-8");
+                                conn.setRequestProperty("Content-Length", Integer.toString( postDataLength));
+                                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                wr.write( postData );
+                                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                                    return new Boolean(true);
+                                } else {
+                                     return new Boolean(false);
                                 }
-                            });
-                            t.purge();
-                            cancel();
-                        }
-                        if(counter == 100){
-                            t.purge();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        }
-                    }
-                };
+                            } catch (Exception e) {
+                                Log.i(LoginActivity.class.getName(), e.getMessage());
+                                return e;
+                            }
 
-                if(!(email.getText().toString().equals("paul@gmail.com") && pwd.getText().toString().equals("123456"))){
-                    pb.setVisibility(View.VISIBLE);
-                    valid[0] = true;
-                    t.schedule(tt, 0, 30);
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object result) {
+                            dialog.cancel();
+                            Log.i(LoginActivity.class.getName(), result.toString());
+                            if (result instanceof Boolean) {
+                                if(result == Boolean.TRUE) {
+                                    Log.i(LoginActivity.class.getName(), "yes");
+                                } else {
+                                    Log.i(LoginActivity.class.getName(), "no");
+                                }
+                            } else {
+                                Log.i(LoginActivity.class.getName(), "Exception");
+                            }
+                        }
+                    }.execute();
                 }
-                else{
-                    pb.setVisibility(View.VISIBLE);
-                    valid[0] = false;
-                    t.schedule(tt, 0, 30);
-                }
+
             }
         });
 
