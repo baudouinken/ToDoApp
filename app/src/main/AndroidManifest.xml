@@ -13,19 +13,20 @@
             android:theme="@style/AppTheme"
             android:networkSecurityConfig="@xml/network_security_config">
 
+        <activity android:name=".InitActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity">
+        </activity>
         <activity android:name=".MainActivity">
 
         </activity>
         <activity android:name=".AddTodoActivity">
         </activity>
         <activity android:name=".UpdateTodoActivity">
-        </activity>
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 

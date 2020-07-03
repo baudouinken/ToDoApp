@@ -37,20 +37,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/errormessage2"
-            android:paddingTop="30dp"
             android:visibility="invisible"
-            android:text="Login incorrect" android:textColor="#D50000"
-            android:paddingStart="8dp"/>
+            android:text="E-Mail or password incorrect." android:textColor="#D50000"
+            android:gravity="center" android:layout_marginTop="18dp" android:layout_marginBottom="10dp"/>
     <Button
             android:id="@+id/login"
             android:text="Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:clickable="true"/>
-    <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar" android:paddingTop="20dp" android:visibility="invisible"
-            android:progressTint="#2962FF"/>
 
 </LinearLayout>

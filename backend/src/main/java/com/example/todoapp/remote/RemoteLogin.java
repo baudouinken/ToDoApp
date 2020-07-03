@@ -21,6 +21,7 @@ public class RemoteLogin implements Login {
     public Response login(String email, String password) {
         logger.info("login(): " + email + ": " + password);
 
+        // delay
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ie) {

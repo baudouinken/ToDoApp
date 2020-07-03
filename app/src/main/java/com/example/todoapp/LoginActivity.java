@@ -1,37 +1,29 @@
 package com.example.todoapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         final TextView err1 = findViewById(R.id.errormessage1);
@@ -39,10 +31,12 @@ public class LoginActivity extends AppCompatActivity {
         final EditText email = findViewById(R.id.email);
         final EditText pwd = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+
+        final boolean[] emailValid = {false};
+
         loginButton.setEnabled(false);
 
         email.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -50,7 +44,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 err1.setVisibility(View.INVISIBLE);
                 err2.setVisibility(View.INVISIBLE);
-                if(pwd.getText().toString().length() == 6 && email.getText().toString().length() != 0){
+                if(!TextUtils.isEmpty(email.getText()) && !Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()){
+                    emailValid[0] = false;
+                }
+                else emailValid[0] = true;
+                if(pwd.getText().toString().length() == 6 && emailValid[0]){
                     loginButton.setEnabled(true);
                 } else {
                     loginButton.setEnabled(false);
@@ -61,13 +59,24 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    if(!emailValid[0]){
+                        err1.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
         pwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(pwd.getText().toString().length() == 6 && email.getText().toString().length() != 0){
+                if(pwd.getText().toString().length() == 6 && emailValid[0]){
                     loginButton.setEnabled(true);
                 } else {
                     loginButton.setEnabled(false);
@@ -86,41 +95,39 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i(LoginActivity.class.getName(), "onClick(): " + v);
                 Log.i(LoginActivity.class.getName(), email.getText().toString() + ", " + pwd.getText().toString());
 
-                if(!TextUtils.isEmpty(email.getText()) && !Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()){
-                    err1.setVisibility(View.VISIBLE);
-                }
-                else {
+                if(emailValid[0]) {
+
+                    // hide keyboard
+                    InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    mgr.hideSoftInputFromWindow(loginButton.getWindowToken(), 0);
+
                     new AsyncTask<Void, Void, Object>() {
 
                         private ProgressDialog dialog = null;
 
                         @Override
                         protected void onPreExecute() {
-
-                            dialog = ProgressDialog.show(LoginActivity.this,
-                                    "Login...", "Please wait...");
+                            dialog = ProgressDialog.show(LoginActivity.this, "Login...", "Please wait...");
                         }
 
                         @Override
                         protected Object doInBackground(Void... arg) {
                             try {
-                                String urlParameters = "email="+email.getText().toString()+"&pwd="+pwd.getText().toString();
-                                byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-                                int postDataLength = postData.length;
-                                String request = "http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/login";
+                                // connect to backend
+                                String request = "http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/login?email="+email.getText().toString()+"&pwd="+pwd.getText().toString();
                                 URL url = new URL(request);
                                 HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-                                conn.setDoOutput(true);
                                 conn.setRequestMethod("POST");
                                 conn.setRequestProperty("Content-Type", "application/json");
                                 conn.setRequestProperty("charset", "utf-8");
-                                conn.setRequestProperty("Content-Length", Integer.toString( postDataLength));
-                                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                                wr.write( postData );
+                                conn.setConnectTimeout(10000);
+                                // check connection result
                                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                                     return new Boolean(true);
-                                } else {
+                                } else if(conn.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
                                      return new Boolean(false);
+                                } else {
+                                    throw new Exception("Connection Error");
                                 }
                             } catch (Exception e) {
                                 Log.i(LoginActivity.class.getName(), e.getMessage());
@@ -132,20 +139,20 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         protected void onPostExecute(Object result) {
                             dialog.cancel();
+                            // handle connection result
                             Log.i(LoginActivity.class.getName(), result.toString());
                             if (result instanceof Boolean) {
-                                if(result == Boolean.TRUE) {
-                                    Log.i(LoginActivity.class.getName(), "yes");
+                                if(result.equals(Boolean.TRUE)) {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 } else {
-                                    Log.i(LoginActivity.class.getName(), "no");
+                                    err2.setVisibility(View.VISIBLE);
                                 }
                             } else {
-                                Log.i(LoginActivity.class.getName(), "Exception");
+                                Toast.makeText(LoginActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }.execute();
                 }
-
             }
         });
 
