@@ -46,6 +46,12 @@
                             android:layout_height="wrap_content"
                             android:text="5pm today"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                    <TextView
+                            android:id="@+id/textViewDueDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="10.05.2020"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
                 </LinearLayout>
 

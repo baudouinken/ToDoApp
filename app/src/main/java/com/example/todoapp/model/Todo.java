@@ -18,11 +18,15 @@ public class Todo implements Serializable{
     @ColumnInfo(name = "desc")
     private String desc;
 
-    @ColumnInfo(name = "finish_by")
-    private String finishBy;
+    @ColumnInfo(name = "dueDate")
+    private long dueDate;
 
     @ColumnInfo(name = "finished")
-    private Boolean finished;
+    private boolean finished;
+
+    @ColumnInfo(name = "favorite")
+    private boolean favorite;
+
 
     public int getId() {
         return id;
@@ -48,19 +52,19 @@ public class Todo implements Serializable{
         this.desc = desc;
     }
 
-    public String getFinishBy() {
-        return finishBy;
-    }
+    public long getDueDate() {  return dueDate;  }
 
-    public void setFinishBy(String finishBy) {
-        this.finishBy = finishBy;
-    }
+    public void setDueDate(long dueDate) {  this.dueDate = dueDate;  }
 
-    public Boolean getFinished() {
+    public boolean getFinished() {
         return finished;
     }
 
-    public void setFinished(Boolean finished) {
+    public void setFinished(boolean finished) {
         this.finished = finished;
     }
+
+    public boolean getFavorite() { return favorite;  }
+
+    public void setFavorite(boolean favorite) {  this.favorite = favorite;  }
 }

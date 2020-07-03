@@ -35,10 +35,32 @@
                     android:hint="description..." />
 
             <EditText
-                    android:id="@+id/editTextFinishBy"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextDate" />
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Date"
+                    android:id="@+id/btn_edit_date"/>
+
+            <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextTime" />
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Time"
+                    android:id="@+id/btn_edit_time"/>
+
+            <CheckBox
+                    android:id="@+id/checkBoxFavorite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="finish by?" />
+                    android:text="Mark as favorite" />
 
             <CheckBox
                     android:id="@+id/checkBoxFinished"

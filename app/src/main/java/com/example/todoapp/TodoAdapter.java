@@ -33,7 +33,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         Todo t = todoList.get(position);
         holder.textViewTodo.setText(t.getName());
         holder.textViewDesc.setText(t.getDesc());
-        holder.textViewFinishBy.setText(t.getFinishBy());
+
 
         if (t.getFinished())
             holder.textViewStatus.setText("Completed");

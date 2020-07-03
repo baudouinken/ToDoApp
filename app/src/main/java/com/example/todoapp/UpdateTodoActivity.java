@@ -1,22 +1,29 @@
 package com.example.todoapp;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.todoapp.model.DatabaseClient;
 import com.example.todoapp.model.Todo;
 
-public class UpdateTodoActivity extends AppCompatActivity {
+import java.util.Calendar;
+import java.util.Date;
 
-    private EditText editTextTodo, editTextDesc, editTextFinishBy;
-    private CheckBox checkBoxFinished;
+public class UpdateTodoActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private EditText editTextTodo, editTextDesc;
+    private TextView editTextDate, editTextTime;
+    private CheckBox checkBoxFinished, checkBoxFavorite;
+    private Button btn_edit_date, btn_edit_time;
+    private  int mYear, mMonth, mDay, mHour, mMinute;
+    Date date = new Date();
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -25,9 +32,18 @@ public class UpdateTodoActivity extends AppCompatActivity {
 
         editTextTodo = findViewById(R.id.editTextTodo);
         editTextDesc = findViewById(R.id.editTextDesc);
-        editTextFinishBy = findViewById(R.id.editTextFinishBy);
 
         checkBoxFinished = findViewById(R.id.checkBoxFinished);
+        checkBoxFavorite = findViewById(R.id.checkBoxFavorite);
+
+        editTextDate = findViewById(R.id.editTextDate);
+        editTextTime = findViewById(R.id.editTextTime);
+
+        btn_edit_date = findViewById(R.id.btn_edit_date);
+        btn_edit_time = findViewById(R.id.btn_edit_time);
+
+        btn_edit_date.setOnClickListener(this);
+        btn_edit_time.setOnClickListener(this);
 
         final Todo todo = (Todo) getIntent().getSerializableExtra("Todo");
 
@@ -64,17 +80,65 @@ public class UpdateTodoActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view == btn_edit_date){
+            //GEt currwnt Date
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    editTextDate.setText(day +"-"+(month+1)+"-"+year);
+                    mYear = year;
+                    mMonth = month;
+                    mDay = day;
+                }
+            }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+        }
+        if (view == btn_edit_time){
+            //GEt currwnt Time
+            final Calendar c = Calendar.getInstance();
+            mHour = c.get(Calendar.HOUR_OF_DAY);
+            mMinute = c.get(Calendar.MINUTE);
+
+            //Lauch Time Picker Dialog
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                    editTextTime.setText(hour+" : "+minute);
+                    mMinute = minute;
+                    mHour = hour;
+                }
+            }, mHour, mMinute, true);
+            timePickerDialog.show();
+        }
+    }
+
     private void loadTodo(Todo todo){
         editTextTodo.setText(todo.getName());
         editTextDesc.setText(todo.getDesc());
-        editTextFinishBy.setText(todo.getFinishBy());
+
+        Date date = new Date(todo.getDueDate());
+        editTextDate.setText(date.getDate()+"."+date.getMonth()+"."+date.getYear());
+        editTextTime.setText(date.getHours()+":"+date.getMinutes());
+
         checkBoxFinished.setChecked(todo.getFinished());
+        checkBoxFavorite.setChecked(todo.getFavorite());
+
     }
 
     private void updateTodo(final Todo todo){
+        Date date = new Date(mYear, mMonth, mDay, mHour, mMinute);
         final String sTodo = editTextTodo.getText().toString().trim();
         final String sDesc = editTextDesc.getText().toString().trim();
-        final String sFinishBy = editTextFinishBy.getText().toString().trim();
+        final long curDate = date.getTime();
+
+        //final Date sDate = editTextDate.getText().toString().trim();
 
         if (sTodo.isEmpty()){
             editTextTodo.setError("Todo Required");
@@ -88,20 +152,15 @@ public class UpdateTodoActivity extends AppCompatActivity {
             return;
         }
 
-        if (sFinishBy.isEmpty()){
-            editTextFinishBy.setError("Finish Date Required");
-            editTextFinishBy.requestFocus();
-            return;
-        }
-
         class UpdateTodo extends AsyncTask<Void, Void, Void>{
 
             @Override
             protected Void doInBackground(Void... voids) {
                 todo.setName(sTodo);
                 todo.setDesc(sDesc);
-                todo.setFinishBy(sFinishBy);
                 todo.setFinished(checkBoxFinished.isChecked());
+                todo.setFavorite(checkBoxFavorite.isChecked());
+                todo.setDueDate(curDate);
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().update(todo);
                 return null;
             }
