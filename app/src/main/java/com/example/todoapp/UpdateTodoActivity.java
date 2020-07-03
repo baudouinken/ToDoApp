@@ -23,7 +23,6 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
     private CheckBox checkBoxFinished, checkBoxFavorite;
     private Button btn_edit_date, btn_edit_time;
     private  int mYear, mMonth, mDay, mHour, mMinute;
-    Date date = new Date();
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -46,6 +45,13 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
         btn_edit_time.setOnClickListener(this);
 
         final Todo todo = (Todo) getIntent().getSerializableExtra("Todo");
+
+        Date date = new Date(todo.getDueDate());
+        mYear = date.getYear();
+        mMonth = date.getMonth();
+        mDay = date.getDay();
+        mHour = date.getHours();
+        mMinute = date.getMinutes();
 
         loadTodo(todo);
 

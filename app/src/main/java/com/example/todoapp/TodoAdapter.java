@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.todoapp.model.Todo;
 
+import java.util.Date;
 import java.util.List;
 
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder> {
@@ -33,12 +34,20 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         Todo t = todoList.get(position);
         holder.textViewTodo.setText(t.getName());
         holder.textViewDesc.setText(t.getDesc());
+        Date date = new Date(t.getDueDate());
+        holder.textViewDueDate.setText(date.getDate()+"."+date.getMonth()+"."+date.getYear());
 
-
-        if (t.getFinished())
-            holder.textViewStatus.setText("Completed");
+        if (t.getFavorite())
+            holder.textViewFavorite.setText("Favorite");
         else
+            holder.textViewFavorite.setText("Not favorite");
+
+        if (t.getFinished()) {
+            holder.textViewStatus.setText("Completed");
+            holder.textViewStatus.setBackgroundColor(1);
+        }else {
             holder.textViewStatus.setText("Not Completed");
+        }
     }
 
     @Override
@@ -48,7 +57,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
 
     class TodoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textViewStatus, textViewTodo, textViewDesc, textViewFinishBy;
+        TextView textViewStatus, textViewTodo, textViewDesc, textViewDueDate, textViewFavorite;
 
         public TodoViewHolder(View itemView) {
             super(itemView);
@@ -56,7 +65,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
             textViewStatus = itemView.findViewById(R.id.textViewStatus);
             textViewTodo = itemView.findViewById(R.id.textViewTodo);
             textViewDesc = itemView.findViewById(R.id.textViewDesc);
-            textViewFinishBy = itemView.findViewById(R.id.textViewFinishBy);
+            textViewDueDate = itemView.findViewById(R.id.textViewDueDate);
+            textViewFavorite = itemView.findViewById(R.id.textViewFavorite);
 
 
             itemView.setOnClickListener(this);

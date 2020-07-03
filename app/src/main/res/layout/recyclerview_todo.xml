@@ -17,16 +17,37 @@
                         android:orientation="vertical"
                         android:padding="7dp">
 
-                    <TextView
-                            android:id="@+id/textViewStatus"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:background="@color/colorPrimaryDark"
-                            android:text="Completed"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/colorLight"
-                            android:textStyle="bold" />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+                <TextView
+                        android:id="@+id/textViewStatus"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:textAlignment="center"
+                        android:text="Completed"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorLight"
+                        android:textStyle="bold" />
+                <TextView
+                        android:id="@+id/textViewFavorite"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@+id/textViewStatus"
+                        android:textAlignment="center"
+                        android:background="@color/colorAccent"
+                        android:text="Favorite"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+
+
                     <TextView
                             android:id="@+id/textViewTodo"
                             android:layout_width="match_parent"
@@ -41,16 +62,9 @@
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
                     <TextView
-                            android:id="@+id/textViewFinishBy"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="5pm today"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-                    <TextView
                             android:id="@+id/textViewDueDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="10.05.2020"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
                 </LinearLayout>
