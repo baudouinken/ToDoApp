@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity  extends AppCompatActivity {
+public class TodoListActivity extends AppCompatActivity {
 
     private FloatingActionButton buttonAddTodo;
     private RecyclerView recyclerView;
@@ -33,7 +33,7 @@ public class MainActivity  extends AppCompatActivity {
         buttonAddTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddTodoActivity.class);
+                Intent intent = new Intent(TodoListActivity.this, AddTodoActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -84,7 +84,7 @@ public class MainActivity  extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Todo> taskList) {
                 super.onPostExecute(taskList);
-                TodoAdapter adapter = new TodoAdapter(MainActivity.this, taskList);
+                TodoAdapter adapter = new TodoAdapter(TodoListActivity.this, taskList);
                 recyclerView.setAdapter(adapter);
             }
         }
@@ -107,7 +107,7 @@ public class MainActivity  extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Todo> taskList) {
                 super.onPostExecute(taskList);
-                TodoAdapter adapter = new TodoAdapter(MainActivity.this, taskList);
+                TodoAdapter adapter = new TodoAdapter(TodoListActivity.this, taskList);
                 recyclerView.setAdapter(adapter);
             }
         }
@@ -130,7 +130,7 @@ public class MainActivity  extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Todo> taskList) {
                 super.onPostExecute(taskList);
-                TodoAdapter adapter = new TodoAdapter(MainActivity.this, taskList);
+                TodoAdapter adapter = new TodoAdapter(TodoListActivity.this, taskList);
                 recyclerView.setAdapter(adapter);
             }
         }

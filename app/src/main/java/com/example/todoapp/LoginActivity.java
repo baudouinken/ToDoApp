@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i(LoginActivity.class.getName(), result.toString());
                             if (result instanceof Boolean) {
                                 if(result.equals(Boolean.TRUE)) {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, TodoListActivity.class));
                                 } else {
                                     err2.setVisibility(View.VISIBLE);
                                 }

@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +18,7 @@ import java.util.Date;
 public class AddTodoActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText editTextTodo, editTextDesc, txtDate, txtTime;
+    private CheckBox checkBoxFavorite;
     Button btnDatePicker, btnTimePicker;
     private  int mYear, mMonth, mDay, mHour, mMinute;
     Date date = new Date();
@@ -35,6 +35,8 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
 
         txtDate = findViewById(R.id.in_date);
         txtTime = findViewById(R.id.in_time);
+
+        checkBoxFavorite = findViewById(R.id.checkBoxFavorite);
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
@@ -115,7 +117,7 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
                 todo.setName(sTask);
                 todo.setDesc(sDesc);
                 todo.setFinished(false);
-                todo.setFavorite(false);
+                todo.setFavorite(checkBoxFavorite.isChecked());
                 todo.setDueDate(curDate);
 
                 //Adding to db
@@ -131,7 +133,7 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
             protected void onPostExecute(Void aVoid){
                 super.onPostExecute(aVoid);
                 finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), TodoListActivity.class));
                 Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
             }
         }

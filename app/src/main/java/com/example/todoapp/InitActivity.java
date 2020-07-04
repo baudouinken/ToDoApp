@@ -1,8 +1,6 @@
 package com.example.todoapp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,16 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.todoapp.model.DatabaseClient;
 import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
-import com.example.todoapp.model.Todo;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 public class InitActivity extends AppCompatActivity {
 
@@ -82,7 +75,7 @@ public class InitActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
-                                startActivity(new Intent(InitActivity.this, MainActivity.class));
+                                startActivity(new Intent(InitActivity.this, TodoListActivity.class));
                                 finish();
                             }
                         })

@@ -50,7 +50,7 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
         Date date = new Date(todo.getDueDate());
         mYear = date.getYear();
         mMonth = date.getMonth();
-        mDay = date.getDay();
+        mDay = date.getDate();
         mHour = date.getHours();
         mMinute = date.getMinutes();
 
@@ -90,11 +90,11 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         if (view == btn_edit_date){
-            //GEt currwnt Date
+            //Get currwnt Date
             final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
+            int dpYear = c.get(Calendar.YEAR);
+            int dpMonth = c.get(Calendar.MONTH);
+            int dpDay = c.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -104,7 +104,7 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
                     mMonth = month;
                     mDay = day;
                 }
-            }, mYear, mMonth, mDay);
+            }, dpYear, dpMonth, dpDay);
             datePickerDialog.show();
         }
         if (view == btn_edit_time){
@@ -145,8 +145,6 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
         final String sDesc = editTextDesc.getText().toString().trim();
         final long curDate = date.getTime();
 
-        //final Date sDate = editTextDate.getText().toString().trim();
-
         if (sTodo.isEmpty()){
             editTextTodo.setError("Todo Required");
             editTextTodo.requestFocus();
@@ -181,7 +179,7 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
                 super.onPostExecute(aVoid);
                 Toast.makeText(getApplicationContext(),"Updated",Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(UpdateTodoActivity.this, MainActivity.class));
+                startActivity(new Intent(UpdateTodoActivity.this, TodoListActivity.class));
             }
         }
         UpdateTodo ut = new UpdateTodo();
@@ -205,7 +203,7 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
                 super.onPostExecute(aVoid);
                 Toast.makeText(getApplicationContext(),"Deleted",Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(UpdateTodoActivity.this, MainActivity.class));
+                startActivity(new Intent(UpdateTodoActivity.this, TodoListActivity.class));
             }
         }
         DeleteTodo dt = new DeleteTodo();
