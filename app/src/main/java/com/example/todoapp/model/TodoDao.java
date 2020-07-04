@@ -6,7 +6,7 @@ import java.util.List;
 @Dao
 public interface TodoDao {
 
-    @Query("SELECT * FROM todo ORDER BY finished, dueDate DESC")
+    @Query("SELECT * FROM todo ORDER BY finished, dueDate ASC")
     List<Todo> getAll();
 
     @Query("SELECT * FROM todo ORDER BY finished, dueDate ASC")
