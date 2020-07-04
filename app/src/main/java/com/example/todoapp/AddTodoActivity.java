@@ -60,7 +60,7 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     txtDate.setText(day +"-"+(month+1)+"-"+year);
                     mYear = year;
-                    mMonth = month;
+                    mMonth = month+1;
                     mDay = day;
                 }
             }, mYear , mMonth, mDay);

@@ -7,12 +7,44 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity" >
 
+        <LinearLayout
+                android:id="@+id/textViewTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="7dp">
+                <Button
+                        android:id="@+id/button_list_com"
+                        android:layout_width="150dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/colorPrimary"
+                        android:text="Nach Datum"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorLight" />
+                <Button
+                        android:id="@+id/button_list_favorite"
+                        android:layout_width="150dp"
+                        android:layout_marginLeft="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/colorPrimary"
+                        android:text="Nach Wichtigkeit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorLight" />
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_todos"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="2dp"
+        />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floating_button_add"
                 android:layout_width="wrap_content"
