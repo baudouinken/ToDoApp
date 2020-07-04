@@ -13,7 +13,7 @@ public class DatabaseClient {
     private DatabaseClient(Context mCtx){
         this.mCtx = mCtx;
 
-//        mCtx.deleteDatabase("todos");
+        //mCtx.deleteDatabase("todos");
         // Database Name : Todos
         appDatabase = Room.databaseBuilder(mCtx,AppDatabase.class, "todos").build();
     }
