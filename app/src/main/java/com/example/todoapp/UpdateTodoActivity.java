@@ -169,8 +169,10 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
                 todo.setFavorite(checkBoxFavorite.isChecked());
                 todo.setDueDate(curDate);
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().update(todo);
-                ResteasyTodoCRUDAccessor remoteDBAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
-                remoteDBAccessor.updateTodo(todo);
+                if (ResteasyTodoCRUDAccessor.serverAvailable) {
+                    ResteasyTodoCRUDAccessor remoteDBAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
+                    remoteDBAccessor.updateTodo(todo);
+                }
                 return null;
             }
 
@@ -191,8 +193,10 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
             @Override
             protected Void doInBackground(Void... voids) {
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().delete(todo);
-                ResteasyTodoCRUDAccessor remoteDBAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
-                remoteDBAccessor.deleteTodo(todo.getId());
+                if (ResteasyTodoCRUDAccessor.serverAvailable) {
+                    ResteasyTodoCRUDAccessor remoteDBAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
+                    remoteDBAccessor.deleteTodo(todo.getId());
+                }
                 return null;
             }
 

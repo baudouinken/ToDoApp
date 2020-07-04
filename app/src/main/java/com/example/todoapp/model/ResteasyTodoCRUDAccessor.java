@@ -7,6 +7,9 @@ import org.jboss.resteasy.client.core.executors.ApacheHttpClient4Executor;
 import java.util.List;
 
 public class ResteasyTodoCRUDAccessor implements TodoCRUDAccessor {
+
+	// save server availability, checked in InitActivity
+	public static boolean serverAvailable = false;
 	
 	protected static String logger = ResteasyTodoCRUDAccessor.class.getSimpleName();
 

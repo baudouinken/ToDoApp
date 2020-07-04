@@ -120,9 +120,11 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
 
                 //Adding to db
                 todo.setId(DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().insert(todo));
-                // Adding to remote backend
-                ResteasyTodoCRUDAccessor serverAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
-                serverAccessor.createTodo(todo);
+                if (ResteasyTodoCRUDAccessor.serverAvailable) {
+                    // Adding to remote backend if server available
+                    ResteasyTodoCRUDAccessor serverAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
+                    serverAccessor.createTodo(todo);
+                }
                 return null;
             }
 
