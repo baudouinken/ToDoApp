@@ -29,7 +29,7 @@ public interface TodoCRUDAccessor {
 
     @DELETE
     @Path("/{todoId}")
-    public boolean deleteTodo(@PathParam("todoId") int todoId);
+    public boolean deleteTodo(@PathParam("todoId") long todoId);
 
     @PUT
     public Todo updateTodo(Todo todo);

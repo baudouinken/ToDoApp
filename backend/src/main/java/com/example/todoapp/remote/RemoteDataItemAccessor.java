@@ -14,11 +14,6 @@ public class RemoteDataItemAccessor implements TodoCRUDAccessor {
 
 	private static List<Todo> todoList = new ArrayList<Todo>();
 
-	/**
-	 * we assign the ids here
-	 */
-	private static int idCount = 0;
-	
 
 	@Override
 	public List<Todo> getTodoList() {
@@ -29,7 +24,6 @@ public class RemoteDataItemAccessor implements TodoCRUDAccessor {
 	@Override
 	public Todo createTodo(Todo todo) {
 		logger.info("createTodo(): " + todo);
-		todo.setId(idCount++);
 		todoList.add(todo);
 		return todo;
 	}
@@ -38,29 +32,31 @@ public class RemoteDataItemAccessor implements TodoCRUDAccessor {
 	public boolean createTodoList(List<Todo> todoList) {
 		this.todoList.removeAll(this.todoList);
 		this.todoList.addAll(todoList);
-		idCount = todoList.size();
 		logger.info("createTodoList(): " + todoList);
 		return true;
 	}
 
 	@Override
-	public boolean deleteTodo(int todoId) {
+	public boolean deleteTodo(final long todoId) {
 		logger.info("deleteTodo(): " + todoId);
-		boolean removed = todoList.remove(new Todo() {
-			private static final long serialVersionUID = 71193783355593985L;
-
-			@Override
-			public int getId() {
-				return todoId;
+		for(Todo todo : todoList) {
+			if(todo.getId() == todoId) {
+				todoList.remove(todo);
+				return true;
 			}
-		});
-		return removed;
+		}
+		return false;
 	}
 
 	@Override
 	public Todo updateTodo(Todo todo) {
-			logger.info("updateTodo(): " + todo);
-			//return todoList.get(todoList.indexOf(todo)).updateFrom(todo);
-			return todo;
+		logger.info("updateTodo(): " + todo);
+		for(Todo t : todoList) {
+			if(t.getId() == todo.getId()) {
+				t.updateFrom(todo);
+				return t;
+			}
+		}
+		return null;
 	}
 }

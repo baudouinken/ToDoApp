@@ -5,12 +5,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 public class Todo implements Serializable{
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -28,11 +29,11 @@ public class Todo implements Serializable{
     private boolean favorite;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -67,4 +68,44 @@ public class Todo implements Serializable{
     public boolean getFavorite() { return favorite;  }
 
     public void setFavorite(boolean favorite) {  this.favorite = favorite;  }
+
+    public Todo updateFrom(Todo todo) {
+        this.setName(todo.getName());
+        this.setDesc(todo.getDesc());
+        this.setDueDate(todo.getDueDate());
+        this.setFavorite(todo.getFavorite());
+        this.setFinished(todo.getFinished());
+
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", dueDate=" + dueDate +
+                ", finished=" + finished +
+                ", favorite=" + favorite +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Todo todo = (Todo) o;
+        return id == todo.id &&
+                dueDate == todo.dueDate &&
+                finished == todo.finished &&
+                favorite == todo.favorite &&
+                Objects.equals(name, todo.name) &&
+                Objects.equals(desc, todo.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, desc, dueDate, finished, favorite);
+    }
 }

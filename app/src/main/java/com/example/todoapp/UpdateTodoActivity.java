@@ -11,6 +11,7 @@ import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.todoapp.model.DatabaseClient;
+import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
 import com.example.todoapp.model.Todo;
 
 import java.util.Calendar;
@@ -168,6 +169,8 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
                 todo.setFavorite(checkBoxFavorite.isChecked());
                 todo.setDueDate(curDate);
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().update(todo);
+                ResteasyTodoCRUDAccessor remoteDBAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
+                remoteDBAccessor.updateTodo(todo);
                 return null;
             }
 
@@ -188,6 +191,8 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
             @Override
             protected Void doInBackground(Void... voids) {
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().delete(todo);
+                ResteasyTodoCRUDAccessor remoteDBAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
+                remoteDBAccessor.deleteTodo(todo.getId());
                 return null;
             }
 

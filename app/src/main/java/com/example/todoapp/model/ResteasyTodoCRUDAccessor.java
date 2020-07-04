@@ -38,7 +38,7 @@ public class ResteasyTodoCRUDAccessor implements TodoCRUDAccessor {
 
 	@Override
 	public Todo createTodo(Todo todo) {
-		Log.i(logger, "createTodo(): send: " + todo);
+		Log.i(logger, "createTodo(): send: " + todo + " " + todo.getId());
 		todo = restClient.createTodo(todo);
 		Log.i(logger, "createTodo(): got: " + todo);
 		return todo;
@@ -53,7 +53,7 @@ public class ResteasyTodoCRUDAccessor implements TodoCRUDAccessor {
 	}
 
 	@Override
-	public boolean deleteTodo(int todoId) {
+	public boolean deleteTodo(long todoId) {
 		Log.i(logger, "deleteTodo(): send: " + todoId);
 		boolean deleted = restClient.deleteTodo(todoId);
 		Log.i(logger, "deleteTodo(): got: " + deleted);

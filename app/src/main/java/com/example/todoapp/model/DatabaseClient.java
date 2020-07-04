@@ -10,22 +10,12 @@ public class DatabaseClient {
 
     private AppDatabase appDatabase;
 
-//    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-//        @Override
-//        public void migrate(SupportSQLiteDatabase database) {
-//            database.execSQL("ALTER TABLE todos RENAME COLUMN task TO name");
-//        }
-//    };
-
     private DatabaseClient(Context mCtx){
         this.mCtx = mCtx;
 
-        //mCtx.deleteDatabase("todos");
+//        mCtx.deleteDatabase("todos");
         // Database Name : Todos
         appDatabase = Room.databaseBuilder(mCtx,AppDatabase.class, "todos").build();
-
-        //appDatabase = Room.databaseBuilder(mCtx, AppDatabase.class, "Todos")
-        //        .addMigrations(MIGRATION_1_2).build();
     }
 
     public static synchronized DatabaseClient getInstance(Context mCtx){
