@@ -46,7 +46,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         holder.textViewTodo.setText(t.getName());
         holder.textViewDesc.setText(t.getDesc());
         Date date = new Date(t.getDueDate());
-        holder.textViewDueDate.setText(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getYear());
+        holder.textViewDueDate.setText(date.getDate()+"."+(date.getMonth()+1)+"."+date.getYear());
 
         final Calendar c = Calendar.getInstance();
 
@@ -58,7 +58,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         if (t.getFavorite())
             holder.textViewFavorite.setText("Favorite");
         else
-            holder.textViewFavorite.setText("Not Favorite");
+            holder.textViewFavorite.setText(" ");
 
         if (t.getFinished()) {
             holder.textViewStatus.setText("Completed");
