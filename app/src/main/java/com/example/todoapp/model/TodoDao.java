@@ -16,7 +16,7 @@ public interface TodoDao {
     List<Todo> getAllWithFavorite();
 
     @Insert
-    void insert(Todo todo);
+    long insert(Todo todo);
 
     @Delete
     void delete(Todo todo);

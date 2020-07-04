@@ -1,34 +1,23 @@
 package com.example.todoapp.model;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import java.io.Serializable;
+import java.util.Objects;
 
-@Entity
 public class Todo implements Serializable{
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    @ColumnInfo(name = "name")
+    private long id;
     private String name;
-
-    @ColumnInfo(name = "desc")
     private String desc;
+    private long dueDate;
+    private boolean finished;
+    private boolean favorite;
 
-    @ColumnInfo(name = "finish_by")
-    private String finishBy;
 
-    @ColumnInfo(name = "finished")
-    private Boolean finished;
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -48,19 +37,59 @@ public class Todo implements Serializable{
         this.desc = desc;
     }
 
-    public String getFinishBy() {
-        return finishBy;
-    }
+    public long getDueDate() {  return dueDate;  }
 
-    public void setFinishBy(String finishBy) {
-        this.finishBy = finishBy;
-    }
+    public void setDueDate(long dueDate) {  this.dueDate = dueDate;  }
 
-    public Boolean getFinished() {
+    public boolean getFinished() {
         return finished;
     }
 
-    public void setFinished(Boolean finished) {
+    public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public boolean getFavorite() { return favorite;  }
+
+    public void setFavorite(boolean favorite) {  this.favorite = favorite;  }
+
+    public Todo updateFrom(Todo todo) {
+        this.setName(todo.getName());
+        this.setDesc(todo.getDesc());
+        this.setDueDate(todo.getDueDate());
+        this.setFavorite(todo.getFavorite());
+        this.setFinished(todo.getFinished());
+
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", dueDate=" + dueDate +
+                ", finished=" + finished +
+                ", favorite=" + favorite +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Todo todo = (Todo) o;
+        return id == todo.id &&
+                dueDate == todo.dueDate &&
+                finished == todo.finished &&
+                favorite == todo.favorite &&
+                Objects.equals(name, todo.name) &&
+                Objects.equals(desc, todo.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, desc, dueDate, finished, favorite);
     }
 }

@@ -5,10 +5,12 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.todoapp.model.DatabaseClient;
+import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
 import com.example.todoapp.model.Todo;
 
 import java.util.Calendar;
@@ -117,7 +119,10 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
                 todo.setDueDate(curDate);
 
                 //Adding to db
-                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().insert(todo);
+                todo.setId(DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().insert(todo));
+                // Adding to remote backend
+                ResteasyTodoCRUDAccessor serverAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
+                serverAccessor.createTodo(todo);
                 return null;
             }
 
