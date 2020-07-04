@@ -128,7 +128,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
             protected Void doInBackground(Void... voids) {
 
                 if (todo.getFavorite()){
-                    holder.textViewFavorite.setText("No Favorite");
+                    holder.textViewFavorite.setText(" ");
                     todo.setFavorite(false);
                 } else {
                     holder.textViewFavorite.setText("Favorite");
