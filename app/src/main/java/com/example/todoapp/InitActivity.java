@@ -64,19 +64,6 @@ public class InitActivity extends AppCompatActivity {
                     if (((Integer) result).intValue() == HttpURLConnection.HTTP_OK) {
                         ResteasyTodoCRUDAccessor.serverAvailable = true;
 
-//                        // sync db with server
-//                        ResteasyTodoCRUDAccessor serverAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
-//                        List<Todo> todosRemote = serverAccessor.getTodoList();
-//                        List<Todo> todosLocal = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().getAll();
-//                        if(todosLocal.size() > 0) {
-//                            serverAccessor.createTodoList(todosLocal);
-//                        } else if(todosLocal.size() > 0 && todosRemote.size() > 0) {
-//                            for(Todo t : todosRemote) {
-//                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().insert(t);
-//                            }
-//                        }
-
-
                         startActivity(new Intent(InitActivity.this, LoginActivity.class));
                         finish();
                     } else {

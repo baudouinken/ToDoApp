@@ -14,9 +14,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.todoapp.model.DatabaseClient;
+import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
+import com.example.todoapp.model.Todo;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -123,6 +127,19 @@ public class LoginActivity extends AppCompatActivity {
                                 conn.setConnectTimeout(10000);
                                 // check connection result
                                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                                    // if valid login sync db and server
+                                    ResteasyTodoCRUDAccessor serverAccessor = new ResteasyTodoCRUDAccessor("http://10.0.2.2:8080/backend-1.0-SNAPSHOT/rest/");
+                                    List<Todo> todosRemote = serverAccessor.getTodoList();
+                                    List<Todo> todosLocal = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().getAll();
+                                    if(todosLocal.size() > 0) {
+                                        serverAccessor.createTodoList(todosLocal);
+                                    } else if(todosLocal.size() == 0 && todosRemote.size() > 0) {
+                                        for(Todo t : todosRemote) {
+                                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().todoDao().insert(t);
+                                        }
+                                    }
+
                                     return new Boolean(true);
                                 } else if(conn.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
                                      return new Boolean(false);
