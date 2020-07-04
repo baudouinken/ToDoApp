@@ -131,7 +131,7 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
         editTextDesc.setText(todo.getDesc());
 
         Date date = new Date(todo.getDueDate());
-        editTextDate.setText(date.getDate()+"."+date.getMonth()+"."+date.getYear());
+        editTextDate.setText(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getYear());
         editTextTime.setText(date.getHours()+":"+date.getMinutes());
 
         checkBoxFinished.setChecked(todo.getFinished());
