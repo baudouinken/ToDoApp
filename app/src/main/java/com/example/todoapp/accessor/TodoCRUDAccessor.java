@@ -1,4 +1,6 @@
-package com.example.todoapp.model;
+package com.example.todoapp.accessor;
+
+import com.example.todoapp.model.Todo;
 
 import java.util.List;
 

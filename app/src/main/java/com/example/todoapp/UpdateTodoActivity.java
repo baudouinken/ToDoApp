@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.todoapp.model.DatabaseClient;
-import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
+import com.example.todoapp.room.DatabaseClient;
+import com.example.todoapp.accessor.ResteasyTodoCRUDAccessor;
 import com.example.todoapp.model.Todo;
 
 import java.util.Calendar;
@@ -22,8 +22,10 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
     private EditText editTextTodo, editTextDesc;
     private TextView editTextDate, editTextTime;
     private CheckBox checkBoxFinished, checkBoxFavorite;
-    private Button btn_edit_date, btn_edit_time;
+    private Button btn_edit_date, btn_edit_time, btn_contacts;
     private  int mYear, mMonth, mDay, mHour, mMinute;
+
+    Todo todo;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -42,10 +44,15 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
         btn_edit_date = findViewById(R.id.btn_edit_date);
         btn_edit_time = findViewById(R.id.btn_edit_time);
 
+        btn_contacts = findViewById(R.id.contacts);
+
         btn_edit_date.setOnClickListener(this);
         btn_edit_time.setOnClickListener(this);
+        btn_contacts.setOnClickListener(this);
 
-        final Todo todo = (Todo) getIntent().getSerializableExtra("Todo");
+
+
+        todo = (Todo) getIntent().getSerializableExtra("Todo");
 
         Date date = new Date(todo.getDueDate());
         mYear = date.getYear();
@@ -59,7 +66,6 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
         findViewById(R.id.button_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_LONG).show();
                 updateTodo(todo);
             }
         });
@@ -107,7 +113,7 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
             }, dpYear, dpMonth, dpDay);
             datePickerDialog.show();
         }
-        if (view == btn_edit_time){
+        else if (view == btn_edit_time){
             //GEt currwnt Time
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -123,6 +129,12 @@ public class UpdateTodoActivity extends AppCompatActivity implements View.OnClic
                 }
             }, mHour, mMinute, true);
             timePickerDialog.show();
+        }
+        else if(view == btn_contacts){
+            Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+            intent.putExtra("Todo", todo);
+
+            startActivity(intent);
         }
     }
 

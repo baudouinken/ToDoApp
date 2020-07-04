@@ -1,4 +1,4 @@
-package com.example.todoapp.model;
+package com.example.todoapp.room;
 
 import androidx.room.Room;
 import android.content.Context;
@@ -13,8 +13,8 @@ public class DatabaseClient {
     private DatabaseClient(Context mCtx){
         this.mCtx = mCtx;
 
-        //mCtx.deleteDatabase("todos");
-        // Database Name : Todos
+        mCtx.deleteDatabase("todos");
+        // scDatabase Name : Todos
         appDatabase = Room.databaseBuilder(mCtx,AppDatabase.class, "todos").build();
     }
 

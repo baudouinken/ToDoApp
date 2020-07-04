@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
+import com.example.todoapp.accessor.ResteasyTodoCRUDAccessor;
 
 import java.net.HttpURLConnection;
 import java.net.URL;

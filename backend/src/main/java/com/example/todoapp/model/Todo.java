@@ -1,6 +1,8 @@
 package com.example.todoapp.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Todo implements Serializable{
@@ -11,7 +13,28 @@ public class Todo implements Serializable{
     private long dueDate;
     private boolean finished;
     private boolean favorite;
+    private List<Contact> contacts;
 
+
+    public Todo() {
+        setId(0);
+        setName("");
+        setDesc("");
+        setDueDate(0L);
+        setFavorite(false);
+        setFinished(false);
+        setContacts(new ArrayList<Contact>());
+    }
+
+    public Todo(long id, String name, String desc, long dueDate, boolean finished, boolean favorite, List<Contact> contacts) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.dueDate = dueDate;
+        this.finished = finished;
+        this.favorite = favorite;
+        this.contacts = contacts;
+    }
 
     public long getId() {
         return id;
@@ -53,6 +76,14 @@ public class Todo implements Serializable{
 
     public void setFavorite(boolean favorite) {  this.favorite = favorite;  }
 
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
     public Todo updateFrom(Todo todo) {
         this.setName(todo.getName());
         this.setDesc(todo.getDesc());
@@ -72,6 +103,7 @@ public class Todo implements Serializable{
                 ", dueDate=" + dueDate +
                 ", finished=" + finished +
                 ", favorite=" + favorite +
+                ", contacts=" + contacts +
                 '}';
     }
 
@@ -85,11 +117,12 @@ public class Todo implements Serializable{
                 finished == todo.finished &&
                 favorite == todo.favorite &&
                 Objects.equals(name, todo.name) &&
-                Objects.equals(desc, todo.desc);
+                Objects.equals(desc, todo.desc) &&
+                Objects.equals(contacts, todo.contacts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, dueDate, finished, favorite);
+        return Objects.hash(id, name, desc, dueDate, finished, favorite, contacts);
     }
 }

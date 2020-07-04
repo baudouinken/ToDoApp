@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      android:orientation="vertical">
+    <Button
+            android:id="@+id/btnload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity= "center"
+            android:gravity="center"
+            android:text="View contacts"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+    />
+    <TextView
+            android:id="@+id/txtname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+
+    />
+    <TextView
+            android:id="@+id/txtphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+    />
+    <ListView
+            android:id="@+id/lst_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    />
+
+   <!-- TODO: Update blank fragment layout -->
+
+
+    <Button
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:text="save "
+            android:id="@+id/save"
+            android:onClick="btnLoad_AndroidContacts_onClick"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" android:gravity="center"/>
+
+
+
+
+
+
+</LinearLayout>

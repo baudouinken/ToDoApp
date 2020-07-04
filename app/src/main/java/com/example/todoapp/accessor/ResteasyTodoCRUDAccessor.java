@@ -1,6 +1,7 @@
-package com.example.todoapp.model;
+package com.example.todoapp.accessor;
 
 import android.util.Log;
+import com.example.todoapp.model.Todo;
 import org.jboss.resteasy.client.ProxyFactory;
 import org.jboss.resteasy.client.core.executors.ApacheHttpClient4Executor;
 

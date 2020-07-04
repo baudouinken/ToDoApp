@@ -14,8 +14,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.todoapp.model.DatabaseClient;
-import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
+import com.example.todoapp.room.DatabaseClient;
+import com.example.todoapp.accessor.ResteasyTodoCRUDAccessor;
 import com.example.todoapp.model.Todo;
 
 import java.net.HttpURLConnection;

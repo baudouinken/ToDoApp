@@ -9,7 +9,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.todoapp.model.DatabaseClient;
+import com.example.todoapp.room.DatabaseClient;
 import com.example.todoapp.model.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,7 +24,7 @@ public class TodoListActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle saveInstaceState){
         super.onCreate(saveInstaceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_todolist);
 
         recyclerView = findViewById(R.id.recyclerview_todos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

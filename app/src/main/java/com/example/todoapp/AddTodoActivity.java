@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.todoapp.model.DatabaseClient;
-import com.example.todoapp.model.ResteasyTodoCRUDAccessor;
+import com.example.todoapp.room.DatabaseClient;
+import com.example.todoapp.accessor.ResteasyTodoCRUDAccessor;
 import com.example.todoapp.model.Todo;
 
 import java.util.Calendar;
